@@ -3,28 +3,28 @@ services:
         dbos:
                 image: mysql:5.7
                 volumes:
-                        - ownsql_storage_new:/var/lib/mysql
+                        - mysql_storage_new:/var/lib/mysql
                 restart: always
                 environment:
-                        MYSQL_ROOT_PASSWORD: root123
+                        MYSQL_ROOT_PASSWORD: rootpass
                         MYSQL_USER: ansh
-                        MYSQL_PASSWORD: ansh123
+                        MYSQL_PASSWORD: anshbargoti
                         MYSQL_DATABASE: mydb
-        ownos:
-                image: owncloud:latest
+        wordpressos:
+                image: wordpress:5.1.1-php7.3-apache
                 restart: always
                 depends_on:
                         - dbos
                 ports:
-                        - 8082:80
+                        - 8081:80
                 environment:
-                        OWN_CLOUD_DB_HOST: dbos
-                        OWN_CLOUD_DB_USER: ansh
-                        OWN_CLOUD_DB_PASSWORD: ansh123
-                        OWN_CLOUD_DB_NAME: mydb
+                        WORDPRESS_DB_HOST: dbos
+                        WORDPRESS_DB_USER: ansh
+                        WORDPRESS_DB_PASSWORD: anshbargoti
+                        WORDPRESS_DB_NAME: mydb
                 volumes:
-                        - owncloud_storage_new:/var/www/html
+                        - wp_storage_new:/var/www/html
 volumes:
-        owncloud_storage_new:
-        ownsql_storage_new:
+        wp_storage_new:
+        mysql_storage_new:
  
